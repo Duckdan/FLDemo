@@ -21,18 +21,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.core.ImagePipeline;
-import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.mob.MobSDK;
 import com.study.fldemo.adapter.VpAdapter;
 import com.study.fldemo.bean.UserBean;
+import com.study.fldemo.dao.DaoManager;
 import com.study.fldemo.event.DialogEvent;
 import com.study.fldemo.fragment.AndroidFragment;
 import com.study.fldemo.fragment.BaseFragment;
@@ -63,9 +59,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static cn.sharesdk.sina.weibo.web.a.c;
-import static java.util.ResourceBundle.clearCache;
-
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -90,18 +83,17 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvTip;
     private SpUtils spUtils;
     private Platform platform;
+    //数据库管理对象
+    private DaoManager daoManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cacheDir = getApplicationContext().getCacheDir();
-//        new Thread(){
-//            @Override
-//            public void run() {
+
         Fresco.initialize(MainActivity.this);
         MobSDK.init(MainActivity.this, "203acaefb6205", "cf155b70894ce61017f26f2ed19af2c3");
-//            }
-//        }.start();
+        daoManager = DaoManager.getInstance(getApplicationContext());
 
         setContentView(R.layout.activity_main);
         spUtils = DefineApplication.spUtils;
@@ -257,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                             initHearView();
                             initMenuItem();
                         }
-                        Log.e("TAG", System.currentTimeMillis()-end + "");
+                        Log.e("TAG", System.currentTimeMillis() - end + "");
                     }
                 });
 

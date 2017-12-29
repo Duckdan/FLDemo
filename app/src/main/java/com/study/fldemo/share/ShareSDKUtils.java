@@ -5,7 +5,6 @@ package com.study.fldemo.share;
  */
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -100,7 +99,7 @@ public class ShareSDKUtils {
      * @param PicUrl
      * @param titleUrl
      */
-    public static void shareQQ(String title, String content, String PicUrl, String titleUrl) {
+    public static void shareQQ(String title, String content, String PicUrl, String titleUrl, int shareType) {
         type = "share";
         QQ.ShareParams sp = new QQ.ShareParams();
         sp.setTitle(title);
@@ -111,9 +110,8 @@ public class ShareSDKUtils {
         if (PicUrl != null) {
             sp.setImageUrl(PicUrl);
         }
-        sp.setShareType(Platform.SHARE_IMAGE);
-        sp.setUrl("http://qq.com");
-        Log.d("share:", PicUrl + "");
+        sp.setShareType(shareType);
+        sp.setUrl(titleUrl);
         Platform qq = PublicStaticData.myShareSDK.getPlatform(QQ.NAME);
         qq.setPlatformActionListener(mPlatformActionListener); // 设置分享事件回调
         // 执行图文分享
@@ -161,9 +159,8 @@ public class ShareSDKUtils {
      *                 Platform.SHARE_VIDEO（分享视频），
      *                 Platform.SHARE_APPS（分享应用，仅微信支持），
      *                 Platform.SHARE_FILE（分享文件，仅微信支持）
-     *                 Platform.SHARE_EMOJI（分享表情，仅微信支持）
      */
-    public static void shareWX(String title, String content, String PicUrl, String titleUrl) {
+    public static void shareWX(String title, String content, String PicUrl, String titleUrl, int shareType) {
         type = "share";
         Wechat.ShareParams sp = new Wechat.ShareParams();
         sp.setTitle(title);
@@ -174,8 +171,8 @@ public class ShareSDKUtils {
         if (PicUrl != null) {
             sp.setImageUrl(PicUrl);
         }
-        sp.setShareType(Platform.SHARE_IMAGE);
-        sp.setUrl("http://qq.com");
+        sp.setShareType(shareType);
+        sp.setUrl(titleUrl);
         Platform wx = PublicStaticData.myShareSDK.getPlatform(Wechat.NAME);
         wx.setPlatformActionListener(mPlatformActionListener); // 设置分享事件回调
         // 执行图文分享

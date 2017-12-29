@@ -11,6 +11,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.study.fldemo.R;
 import com.study.fldemo.bean.AndroidBean;
 import com.study.fldemo.bean.FuLiBean;
+import com.study.fldemo.dao.DatabaseBean;
 import com.study.fldemo.utils.TimeUtils;
 
 import java.util.ArrayList;
@@ -61,11 +62,21 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.AndroidH
         holder.tvTitle.setText(firstBean.getDesc());
         holder.tvAuthor.setText(firstBean.getWho());
         holder.tvTime.setText(TimeUtils.utc2Local(firstBean.getPublishedAt()));
-        holder. itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
-                    listener.onItemClick(secondBean.url, firstBean.getUrl());
+                    DatabaseBean bean = new DatabaseBean();
+                    bean.set_id(firstBean.get_id());
+                    bean.setCreatedAt(firstBean.getCreatedAt());
+                    bean.setDesc(firstBean.getDesc());
+                    bean.setPublishedAt(firstBean.getPublishedAt());
+                    bean.setSource(firstBean.getSource());
+                    bean.setType(firstBean.getType());
+                    bean.setUrl(firstBean.getUrl());
+                    bean.setWho(firstBean.getWho());
+                    bean.setImageUrl(secondBean.url);
+                    listener.onItemClick(bean);
                 }
             }
         });
@@ -98,7 +109,7 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.AndroidH
             tvTime = (TextView) itemView.findViewById(R.id.tv_time);
         }
 
-        public void setData( int position) {
+        public void setData(int position) {
             final AndroidBean firstBean = first.get(position);
             final FuLiBean secondBean = second.get(position);
             sdv.setImageURI(secondBean.url);
@@ -115,7 +126,7 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.AndroidH
     }
 
     public interface OnItemClickListener {
-        void onItemClick(String pictureUrl, String wordUrl);
+        void onItemClick(DatabaseBean bean);
     }
 
 }

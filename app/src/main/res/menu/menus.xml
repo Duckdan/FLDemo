@@ -23,9 +23,12 @@
                     android:id="@+id/menu_search"
                     android:title="百度一下"/>
                 <item
+                    android:id="@+id/menu_collect"
+                    android:title="我的收藏"/>
+                <item
                     android:id="@+id/menu_exit"
-                    android:visible="false"
-                    android:title="退出登录"/>
+                    android:title="退出登录"
+                    android:visible="false"/>
             </group>
         </menu>
     </item>

@@ -17,9 +17,9 @@ import com.study.fldemo.R;
 import com.study.fldemo.adapter.AndroidAdapter;
 import com.study.fldemo.bean.AllBean;
 import com.study.fldemo.bean.AndroidBean;
-import com.study.fldemo.bean.DataBean;
 import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.contract.WebContract;
+import com.study.fldemo.dao.DatabaseBean;
 import com.study.fldemo.presenter.WebPresenter;
 import com.study.toastutils.ToastUtils;
 
@@ -128,11 +128,8 @@ public class WebFragment extends BaseFragment implements WebContract.View,SwipeR
         androidAdapter.setOnItemClickListener(new AndroidAdapter.OnItemClickListener() {
 
             @Override
-            public void onItemClick(String pictureUrl, String wordUrl) {
+            public void onItemClick(DatabaseBean bean) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                DataBean bean = new DataBean();
-                bean.setPictureUrl(pictureUrl);
-                bean.setWebUrl(wordUrl);
                 intent.putExtra("data", bean);
                 startActivity(intent);
             }

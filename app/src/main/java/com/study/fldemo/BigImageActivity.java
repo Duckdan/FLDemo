@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -33,8 +31,8 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.security.Permission;
 
+import cn.sharesdk.framework.Platform;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -43,8 +41,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * Created by Administrator on 2017/8/9.
@@ -118,7 +114,7 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
                     setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ShareSDKUtils.shareQQ(fuLiBean.who + "", fuLiBean.desc + "", picurl, picurl);
+                            ShareSDKUtils.shareQQ(fuLiBean.who + "", fuLiBean.desc + "", picurl, picurl, Platform.SHARE_IMAGE);
                             shareDialog.dismiss();
                         }
                     });
@@ -127,7 +123,7 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
                     setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ShareSDKUtils.shareWX(fuLiBean.who + "", fuLiBean.desc + "", picurl, picurl);
+                            ShareSDKUtils.shareWX(fuLiBean.who + "", fuLiBean.desc + "", picurl, picurl, Platform.SHARE_IMAGE);
                             shareDialog.dismiss();
                         }
                     });
