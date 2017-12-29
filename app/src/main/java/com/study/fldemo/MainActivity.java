@@ -180,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
                         initHearView();
                         initMenuItem();
                         break;
+                    case 5:
+                        Intent collectIntent = new Intent(MainActivity.this, CollectActivity.class);
+                        startActivity(collectIntent);
+                        break;
                 }
                 updateMenuItem();
                 choice = -1;
@@ -216,6 +220,11 @@ public class MainActivity extends AppCompatActivity {
                         DefineApplication.loginState = false;
                         choice = 4;
                         string = "正在退出...";
+                        handler.sendEmptyMessageDelayed(0, 1000);
+                        break;
+                    case R.id.menu_collect:
+                        choice = 5;
+                        string = "前往收藏...";
                         handler.sendEmptyMessageDelayed(0, 1000);
                         break;
                 }
@@ -317,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
-        Log.e("thread::", Thread.currentThread().getName() + "==");
+
         if (event.getState() == 1) {
             runOnUiThread(new Runnable() {
                 @Override

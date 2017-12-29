@@ -3,24 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_search"
+    android:id="@+id/activity_collect"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/themeColor"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.study.fldemo.SearchActivity">
+    tools:context="com.study.fldemo.CollectActivity">
 
-   <android.support.v7.widget.Toolbar
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-       android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="@color/themeColor"
+        android:fitsSystemWindows="true"
         app:contentInsetStart="0dp"
-     >
+        >
+
         <RelativeLayout
+            android:id="@+id/rl"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="@color/themeColor"
             >
 
             <ImageView
@@ -35,22 +37,21 @@
                 />
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="百度一下"
+                android:text="我的收藏"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp"/>
+
         </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
 
-
-   </android.support.v7.widget.Toolbar>
-
-    <WebView
-        android:id="@+id/wv"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </WebView>
+    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
