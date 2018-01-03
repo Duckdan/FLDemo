@@ -98,11 +98,11 @@ public class CollectActivity extends AppCompatActivity {
         });
 
         showSa = new ScaleAnimation(0, 1, 0, 1, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        showSa.setDuration(500);
+        showSa.setDuration(300);
         showSa.setInterpolator(new LinearInterpolator());
 
         hideSa = new ScaleAnimation(1, 0, 1, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        hideSa.setDuration(500);
+        hideSa.setDuration(300);
         hideSa.setInterpolator(new LinearInterpolator());
     }
 
@@ -189,6 +189,7 @@ public class CollectActivity extends AppCompatActivity {
                             llBottom.setVisibility(View.GONE);
                             tvCheck.setText("全选");
                             cbCheck.setChecked(false);
+                            tvCancel.setVisibility(View.GONE);
                         }
                     }
 
