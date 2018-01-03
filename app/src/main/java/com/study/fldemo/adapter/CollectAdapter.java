@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.study.fldemo.R;
@@ -24,6 +25,9 @@ public class CollectAdapter extends RecyclerView.Adapter {
     private final Context context;
     private final List<Object> lists;
     private CollectAdapter.OnItemClickListener listener;
+    private OnItemLongClickListener longListener;
+    private boolean isShow;
+    private boolean isUserDeal = false;
 
     public CollectAdapter(Context context, List<Object> lists) {
         this.context = context;
@@ -62,26 +66,95 @@ public class CollectAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         Object o = lists.get(position);
         if (holder instanceof CollectTitleHolder) {
             String title = (String) o;
             ((CollectTitleHolder) holder).tvTitle.setText(title);
         } else if (holder instanceof CollectContentHolder) {
             final DatabaseBean bean = (DatabaseBean) o;
+
+            if (isShow) {
+                ((CollectContentHolder) holder).cb.setVisibility(View.VISIBLE);
+            } else {
+                ((CollectContentHolder) holder).cb.setVisibility(View.GONE);
+            }
+
+            boolean check = bean.isCheck();
+            if (check) {
+                ((CollectContentHolder) holder).cb.setChecked(true);
+            } else {
+                ((CollectContentHolder) holder).cb.setChecked(false);
+            }
+
             ((CollectContentHolder) holder).tvDesc.setText(bean.getDesc());
             ((CollectContentHolder) holder).tvUrl.setText(TimeUtils.utc2Local(bean.getPublishedAt()));
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(listener!=null){
+                    if (listener != null) {
                         listener.onItemClick(bean);
                     }
                 }
             });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if (longListener != null) {
+                        boolean hasChecked = false;
+                        for (Object bean : lists) {
+                            if (bean instanceof DatabaseBean) {
+                                DatabaseBean db = (DatabaseBean) bean;
+                                hasChecked |= db.isCheck();
+                            }
+                        }
+                        longListener.onItemLongClick(bean, hasChecked);
+                    }
+                    return true;
+                }
+            });
+//
+//            ((CollectContentHolder) holder).cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton button, boolean b) {
+//                    if (isUserDeal) {
+//                        Log.e("check::", position + "===");
+//                        //当最后一条数据刷新完毕的时候，将isUserDeal设置为false
+//                        if (position == lists.size() - 1) {
+//                            isUserDeal = false;
+//                        }
+//                        return;
+//                    }
+//                    bean.setCheck(b);
+//                    boolean hasChecked = false;
+//                    boolean isAllCheck = true;
+//                    int single = 0;
+//                    for (Object bean : lists) {
+//                        if (bean instanceof DatabaseBean) {
+//                            DatabaseBean db = (DatabaseBean) bean;
+//                            boolean check = db.isCheck();
+//                            if (check) {
+//                                single++;
+//                            }
+//                            hasChecked |= check;
+//                            isAllCheck &= check;
+//                        }
+//                    }
+//
+//                    EventBus.getDefault().post(new CollectUIEvent(isAllCheck, hasChecked, single == 1, bean));
+//                }
+//            });
         }
     }
 
+    public void setShowCheckBox(boolean isShow) {
+        this.isShow = isShow;
+    }
+
+    public void setIsUserDeal(boolean isUserDeal) {
+        this.isUserDeal = isUserDeal;
+    }
 
     public static class CollectTitleHolder extends RecyclerView.ViewHolder {
 
@@ -97,11 +170,13 @@ public class CollectAdapter extends RecyclerView.Adapter {
 
         private final TextView tvDesc;
         private final TextView tvUrl;
+        private final CheckBox cb;
 
         public CollectContentHolder(View itemView) {
             super(itemView);
             tvDesc = (TextView) itemView.findViewById(R.id.tv_desc);
             tvUrl = (TextView) itemView.findViewById(R.id.tv_url);
+            cb = (CheckBox) itemView.findViewById(R.id.cb);
         }
     }
 
@@ -109,8 +184,15 @@ public class CollectAdapter extends RecyclerView.Adapter {
         this.listener = listener;
     }
 
+    public void setOnItemLongClickListener(OnItemLongClickListener listener) {
+        this.longListener = listener;
+    }
+
     public interface OnItemClickListener {
         void onItemClick(DatabaseBean bean);
     }
 
+    public interface OnItemLongClickListener {
+        void onItemLongClick(DatabaseBean bean, boolean hasCheck);
+    }
 }

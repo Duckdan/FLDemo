@@ -4,9 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
-import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Transient;
 
 /**
  * Created by Administrator on 2017/12/27.
@@ -28,11 +29,12 @@ public class DatabaseBean implements Parcelable {
     private Integer saveTime;
     //用于保存置顶之前的保存时间
     private Integer stickTime;
+    @Transient
+    private boolean isCheck;
 
     @Generated(hash = 772484586)
-    public DatabaseBean(Long id, String _id, String createdAt, String desc,
-                        String publishedAt, String source, String type, String url, String who,
-                        String imageUrl, Integer saveTime, Integer stickTime) {
+    public DatabaseBean(Long id, String _id, String createdAt, String desc, String publishedAt, String source,
+            String type, String url, String who, String imageUrl, Integer saveTime, Integer stickTime) {
         this.id = id;
         this._id = _id;
         this.createdAt = createdAt;
@@ -147,6 +149,14 @@ public class DatabaseBean implements Parcelable {
         this.stickTime = stickTime;
     }
 
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -166,6 +176,15 @@ public class DatabaseBean implements Parcelable {
         dest.writeString(this.imageUrl);
         dest.writeValue(this.saveTime);
         dest.writeValue(this.stickTime);
+        dest.writeByte(this.isCheck ? (byte) 1 : (byte) 0);
+    }
+
+    public boolean getIsCheck() {
+        return this.isCheck;
+    }
+
+    public void setIsCheck(boolean isCheck) {
+        this.isCheck = isCheck;
     }
 
     protected DatabaseBean(Parcel in) {
@@ -181,6 +200,7 @@ public class DatabaseBean implements Parcelable {
         this.imageUrl = in.readString();
         this.saveTime = (Integer) in.readValue(Integer.class.getClassLoader());
         this.stickTime = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.isCheck = in.readByte() != 0;
     }
 
     public static final Parcelable.Creator<DatabaseBean> CREATOR = new Parcelable.Creator<DatabaseBean>() {

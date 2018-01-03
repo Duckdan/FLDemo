@@ -18,9 +18,11 @@
             android:id="@+id/cb"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:clickable="false"
+            android:focusable="false"
             android:button="@null"
             android:background="@drawable/check_selector"
-
+            android:visibility="gone"
             />
 
         <LinearLayout
@@ -35,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
-                android:lines="2"
+                android:maxLines="2"
                 android:ellipsize="end"
                 android:textColor="@color/gray"
                 android:textSize="16sp"
@@ -54,4 +56,9 @@
         </LinearLayout>
 
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/gray"
+        />
 </LinearLayout>
