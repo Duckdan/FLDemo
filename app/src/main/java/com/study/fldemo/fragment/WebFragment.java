@@ -129,6 +129,7 @@ public class WebFragment extends BaseFragment implements WebContract.View,SwipeR
 
             @Override
             public void onItemClick(DatabaseBean bean) {
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("data", bean);
                 startActivity(intent);

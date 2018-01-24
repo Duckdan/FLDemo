@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.study.fldemo.R;
 import com.study.fldemo.dao.DatabaseBean;
 import com.study.fldemo.utils.TimeUtils;
+import com.study.fldemo.utils.doubleclick.AntiShake;
 
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class CollectAdapter extends RecyclerView.Adapter {
     private OnItemLongClickListener longListener;
     private boolean isShow;
     private boolean isUserDeal = false;
+    protected AntiShake antiShake = new AntiShake();
 
     public CollectAdapter(Context context, List<Object> lists) {
         this.context = context;
@@ -92,6 +94,9 @@ public class CollectAdapter extends RecyclerView.Adapter {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    if (antiShake.check(view)) {
+                        return;
+                    }
                     if (listener != null) {
                         listener.onItemClick(bean);
                     }

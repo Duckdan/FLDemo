@@ -130,6 +130,7 @@ public class IosFragment extends BaseFragment implements IosContract.View, Swipe
 
             @Override
             public void onItemClick(DatabaseBean bean) {
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("data", bean);
                 startActivity(intent);

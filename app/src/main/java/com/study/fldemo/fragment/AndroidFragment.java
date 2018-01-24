@@ -132,6 +132,7 @@ public class AndroidFragment extends BaseFragment implements AndroidContract.Vie
 
             @Override
             public void onItemClick(DatabaseBean bean) {
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("data", bean);
                 startActivity(intent);

@@ -129,6 +129,7 @@ public class VideoFragment extends BaseFragment implements VideoContract.View,Sw
 
             @Override
             public void onItemClick(DatabaseBean bean) {
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("data", bean);
                 startActivity(intent);

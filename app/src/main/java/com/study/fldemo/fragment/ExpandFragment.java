@@ -129,6 +129,7 @@ public class ExpandFragment extends BaseFragment implements ExpandContract.View,
 
             @Override
             public void onItemClick(DatabaseBean bean) {
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("data", bean);
                 startActivity(intent);

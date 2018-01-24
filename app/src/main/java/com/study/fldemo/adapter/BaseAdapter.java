@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.study.fldemo.R;
 import com.study.fldemo.bean.FuLiBean;
+import com.study.fldemo.utils.doubleclick.AntiShake;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.MineHolder> {
     private Context mContext;
     private List<FuLiBean> mLists;
     private OnItemClickListener listener;
+    protected AntiShake antiShake = new AntiShake();
 
     public BaseAdapter(Context context, List<FuLiBean> lists) {
         mContext = context;
@@ -88,6 +90,9 @@ public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.MineHolder> {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (antiShake.check(v)) {
+                            return;
+                        }
                         int position = getAdapterPosition();
 //                        Toast.makeText(mContext, "点击了" + position, Toast.LENGTH_SHORT).show();
                         if (listener != null) {

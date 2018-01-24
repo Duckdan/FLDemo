@@ -23,6 +23,7 @@ public abstract class BaseFragment extends Fragment {
     protected NetStateUtils netStateUtils;
     Unbinder unbinder;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

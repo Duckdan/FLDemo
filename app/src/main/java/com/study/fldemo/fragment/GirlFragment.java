@@ -11,7 +11,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.study.fldemo.BigImageActivity;
 import com.study.fldemo.R;
@@ -84,6 +83,7 @@ public class GirlFragment extends BaseFragment implements SecondViewI, SwipeRefr
         mBaseAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(int position, FuLiBean fuLiBean) {
+
                 Intent intent = new Intent(context, BigImageActivity.class);
                 intent.putExtra("big", fuLiBean);
                 startActivity(intent);

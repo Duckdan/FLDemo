@@ -13,6 +13,7 @@ import com.study.fldemo.bean.AndroidBean;
 import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.dao.DatabaseBean;
 import com.study.fldemo.utils.TimeUtils;
+import com.study.fldemo.utils.doubleclick.AntiShake;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.AndroidH
     private ArrayList<AndroidBean> first;
     private ArrayList<FuLiBean> second;
     private OnItemClickListener listener;
+    protected AntiShake antiShake = new AntiShake();
 
     public AndroidAdapter(Context context, ArrayList<AndroidBean> first, ArrayList<FuLiBean> second) {
         this.context = context;
@@ -65,6 +67,9 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.AndroidH
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (antiShake.check(view)) {
+                    return;
+                }
                 if (listener != null) {
                     DatabaseBean bean = new DatabaseBean();
                     bean.set_id(firstBean.get_id());
