@@ -7,6 +7,7 @@ package com.study.fldemo.share;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -102,6 +103,7 @@ public class ShareSDKUtils {
     public static void shareQQ(String title, String content, String PicUrl, String titleUrl, int shareType) {
         type = "share";
         QQ.ShareParams sp = new QQ.ShareParams();
+
         sp.setTitle(title);
         sp.setText(content);
         if (titleUrl != null) {
@@ -163,7 +165,11 @@ public class ShareSDKUtils {
     public static void shareWX(String title, String content, String PicUrl, String titleUrl, int shareType) {
         type = "share";
         Wechat.ShareParams sp = new Wechat.ShareParams();
-        sp.setTitle(title);
+        if (TextUtils.isEmpty(title)) {
+            sp.setTitle(content);
+        } else {
+            sp.setTitle(title);
+        }
         sp.setText(content);
         if (titleUrl != null) {
             sp.setTitleUrl(titleUrl); // 标题的超链接
