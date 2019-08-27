@@ -2,6 +2,7 @@ package com.study.fldemo;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.study.fldemo.utils.SpUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -17,6 +18,7 @@ public class DefineApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fresco.initialize(this);
         spUtils = SpUtils.getInstance(getApplicationContext());
     }
 

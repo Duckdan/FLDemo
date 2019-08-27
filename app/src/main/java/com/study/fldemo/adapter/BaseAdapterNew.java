@@ -2,9 +2,9 @@ package com.study.fldemo.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.study.fldemo.R;
@@ -26,14 +25,14 @@ import java.util.List;
  * Created by Administrator on 2017/8/8.
  */
 
-public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.MineHolder> {
+public class BaseAdapterNew extends RecyclerView.Adapter<BaseAdapterNew.MineHolder> {
 
     private Context mContext;
     private List<FuLiBean> mLists;
     private OnItemClickListener listener;
     protected AntiShake antiShake = new AntiShake();
 
-    public BaseAdapter(Context context, List<FuLiBean> lists) {
+    public BaseAdapterNew(Context context, List<FuLiBean> lists) {
         mContext = context;
         mLists = lists;
     }
@@ -48,7 +47,11 @@ public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.MineHolder> {
 //            inflate = View.inflate(mContext, R.layout.rv_footer, null);
 //
 //        } else {
-        inflate = View.inflate(mContext, R.layout.rv_item, null);
+        inflate = View.inflate(mContext, R.layout.rv_item_new, null);
+        StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int dp5 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5f, mContext.getResources().getDisplayMetrics());
+        layoutParams.setMargins(dp5, dp5, dp5, dp5);
+        inflate.setLayoutParams(layoutParams);
         // sglm.setSpanCount(2);
 //        }
         return new MineHolder(inflate, viewType);
@@ -113,7 +116,7 @@ public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.MineHolder> {
         }
 
         public void setFuLiBean(FuLiBean fuLiBean, int position) {
-            ViewGroup.LayoutParams layoutParams = mSdv.getLayoutParams();
+            ViewGroup.LayoutParams layoutParams = itemView.getLayoutParams();
 //            layoutParams.width = 300;
             if (position % 2 == 0) {
                 layoutParams.height = 500;

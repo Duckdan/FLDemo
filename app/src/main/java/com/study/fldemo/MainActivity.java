@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         cacheDir = getApplicationContext().getCacheDir();
 
-        Fresco.initialize(MainActivity.this);
         MobSDK.init(MainActivity.this, "203acaefb6205", "cf155b70894ce61017f26f2ed19af2c3");
         daoManager = DaoManager.getInstance(getApplicationContext());
 
@@ -136,8 +135,8 @@ public class MainActivity extends AppCompatActivity {
         int heightPixels = metrics.heightPixels;
         ViewGroup.LayoutParams lp = nv.getLayoutParams();
         lp.width = (int) (0.6 * widthPixels);
-        lp.height = heightPixels;
-
+//        lp.height = heightPixels;
+        nv.setLayoutParams(lp);
         List<BaseFragment> lists = new ArrayList<>();
         List<String> titles = new ArrayList<>();
         lists.add(new AndroidFragment());
