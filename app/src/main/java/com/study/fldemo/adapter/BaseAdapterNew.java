@@ -2,8 +2,8 @@ package com.study.fldemo.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
