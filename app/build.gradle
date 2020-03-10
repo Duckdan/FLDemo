@@ -21,6 +21,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -67,4 +68,9 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     testImplementation 'junit:junit:4.12'
     implementation 'com.github.Duckdan:ToastLibray:V1.1'
+
+    //kotlin以及协程依赖
+    implementation rootProject.ext.kotlinLibs
+    //65536
+    implementation 'androidx.multidex:multidex:2.0.0'
 }

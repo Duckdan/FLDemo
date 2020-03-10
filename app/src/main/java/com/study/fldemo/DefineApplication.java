@@ -1,11 +1,13 @@
 package com.study.fldemo;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.study.fldemo.utils.SpUtils;
 
-import org.greenrobot.eventbus.EventBus;
+
+import androidx.multidex.MultiDex;
 
 /**
  * Created by zouqianyu on 2017/10/1.
@@ -21,5 +23,12 @@ public class DefineApplication extends Application {
         Fresco.initialize(this);
         spUtils = SpUtils.getInstance(getApplicationContext());
     }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
 
 }
