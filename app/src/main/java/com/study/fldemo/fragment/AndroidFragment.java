@@ -3,6 +3,7 @@ package com.study.fldemo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.contract.AndroidContract;
 import com.study.fldemo.dao.DatabaseBean;
 import com.study.fldemo.presenter.AndroidPresenter;
+import com.study.fldemo.presenter.AndroidPresenterKt;
 import com.study.toastutils.ToastUtils;
 
 import java.util.ArrayList;
@@ -46,6 +49,7 @@ public class AndroidFragment extends BaseFragment implements AndroidContract.Vie
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
     private AndroidPresenter presenter;
+    private AndroidPresenterKt presenterKotlin;
     private AndroidAdapter androidAdapter;
     private boolean netStateFlag;
     private String isFirstId = "";
@@ -71,6 +75,7 @@ public class AndroidFragment extends BaseFragment implements AndroidContract.Vie
         super.setUserVisibleHint(isVisibleToUser);
         if (presenter == null) {
             presenter = new AndroidPresenter(context, this);
+            presenterKotlin = new AndroidPresenterKt( this);
         }
         if (isVisibleToUser) {
             queryOriginalData();
@@ -185,7 +190,7 @@ public class AndroidFragment extends BaseFragment implements AndroidContract.Vie
 
     @Override
     public void queryOriginalData() {
-        presenter.queryOriginalData(size, page);
+        presenterKotlin.queryOriginalData(size, page);
     }
 
     @Override

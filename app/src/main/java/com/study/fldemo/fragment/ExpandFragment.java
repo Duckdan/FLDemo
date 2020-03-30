@@ -2,12 +2,14 @@ package com.study.fldemo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.contract.ExpandContract;
 import com.study.fldemo.dao.DatabaseBean;
 import com.study.fldemo.presenter.ExpandPresenter;
+import com.study.fldemo.presenter.ExpandPresenterKt;
 import com.study.toastutils.ToastUtils;
 
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/9/29.
  */
 
-public class ExpandFragment extends BaseFragment implements ExpandContract.View,SwipeRefreshLayout.OnRefreshListener {
+public class ExpandFragment extends BaseFragment implements ExpandContract.View, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.ll_bg)
     LinearLayout llBg;
     @BindView(R.id.tv_net)
@@ -42,7 +45,7 @@ public class ExpandFragment extends BaseFragment implements ExpandContract.View,
     TextView tvLoading;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
-    private ExpandPresenter presenter;
+    private ExpandPresenterKt presenter;
     private AndroidAdapter androidAdapter;
     private boolean netStateFlag;
     private String isFirstId = "";
@@ -67,7 +70,7 @@ public class ExpandFragment extends BaseFragment implements ExpandContract.View,
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (presenter == null) {
-            presenter = new ExpandPresenter(context, this);
+            presenter = new ExpandPresenterKt(this);
         }
         if (isVisibleToUser) {
             queryOriginalData();

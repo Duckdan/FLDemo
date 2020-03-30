@@ -4,6 +4,7 @@ import com.study.fldemo.bean.AndroidResultBean;
 import com.study.fldemo.bean.FuLiResultBean;
 
 import io.reactivex.Observable;
+import kotlinx.coroutines.Deferred;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -34,4 +35,14 @@ public interface HttpUrlManager {
 
     @GET("data/休息视频/{size}/{page}")
     Observable<AndroidResultBean> getVideoData(@Path("size") int size, @Path("page") int page);
+
+    //============================================
+    @GET("data/福利/{size}/{page}")
+    Deferred<FuLiResultBean> getFuLiListDataKotlin(@Path("size") int size, @Path("page") int page);
+
+    @GET("data/Android/{size}/{page}")
+    Deferred<AndroidResultBean> getAndroidDataKotlin(@Path("size") int size, @Path("page") int page);
+
+    @GET("data/拓展资源/{size}/{page}")
+    Deferred<AndroidResultBean> getExpandDataKotlin(@Path("size") int size, @Path("page") int page);
 }
