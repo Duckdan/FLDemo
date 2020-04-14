@@ -9,9 +9,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.study.fldemo.DefineApplication;
 import com.study.fldemo.event.DialogEvent;
 import com.study.fldemo.utils.SpUtils;
@@ -33,12 +36,12 @@ import cn.sharesdk.wechat.moments.WechatMoments;
 
 public class ShareSDKUtils {
     private static String type = "";
-    private static SimpleDraweeView sdv;
+    private static ImageView sdv;
     private static Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             PlatformDb pd = (PlatformDb) msg.obj;
-            sdv.setImageURI(pd.getUserIcon());
+            Glide.with(sdv.getContext()).load(pd.getUserIcon()).apply(new RequestOptions().transform(new CircleCrop())).into(sdv);
             tvName.setText(pd.getUserName());
         }
     };
@@ -190,7 +193,7 @@ public class ShareSDKUtils {
     /**
      * 登录
      */
-    public static void Login(String name, SimpleDraweeView sdv, TextView tvName) {
+    public static void Login(String name, ImageView sdv, TextView tvName) {
         ShareSDKUtils.sdv = sdv;
         ShareSDKUtils.tvName = tvName;
         type = "login";
@@ -209,7 +212,7 @@ public class ShareSDKUtils {
     /**
      * 取消登录
      */
-    public static void logout(String name, SimpleDraweeView sdv) {
+    public static void logout(String name, ImageView sdv) {
         ShareSDKUtils.sdv = sdv;
         type = "login";
         Platform mPlatform = ShareSDK.getPlatform(name);

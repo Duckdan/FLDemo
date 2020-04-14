@@ -2,12 +2,14 @@ package com.study.fldemo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +22,7 @@ import com.study.fldemo.bean.AndroidBean;
 import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.contract.IosContract;
 import com.study.fldemo.dao.DatabaseBean;
-import com.study.fldemo.presenter.IosPresenter;
+import com.study.fldemo.presenter.IosPresenterKt;
 import com.study.toastutils.ToastUtils;
 
 import java.util.ArrayList;
@@ -43,7 +45,7 @@ public class IosFragment extends BaseFragment implements IosContract.View, Swipe
     TextView tvLoading;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
-    private IosPresenter presenter;
+    private IosPresenterKt presenter;
     private AndroidAdapter androidAdapter;
     private boolean netStateFlag;
     private String isFirstId = "";
@@ -68,7 +70,7 @@ public class IosFragment extends BaseFragment implements IosContract.View, Swipe
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (presenter == null) {
-            presenter = new IosPresenter(context, this);
+            presenter = new IosPresenterKt(this);
         }
         if (isVisibleToUser) {
             queryOriginalData();
@@ -188,14 +190,11 @@ public class IosFragment extends BaseFragment implements IosContract.View, Swipe
 
     @Override
     public void onGetDataSuccess(AllBean<AndroidBean> bean) {
-//        if (tvLoading != null && llBg != null) {
-            tvLoading.setVisibility(View.GONE);
-            llBg.setVisibility(View.GONE);
-//        }
+        tvLoading.setVisibility(View.GONE);
+        llBg.setVisibility(View.GONE);
         String id = "";
-        ArrayList<AndroidBean> results = null;
-        if (bean != null) {
-            results = bean.getSecond();
+        ArrayList<AndroidBean> results = bean.getSecond();
+        if (results != null && results.size() > 0) {
             id = results.get(0).get_id();
         }
 

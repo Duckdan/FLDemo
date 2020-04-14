@@ -24,7 +24,6 @@ import com.study.fldemo.bean.AndroidBean;
 import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.contract.AndroidContract;
 import com.study.fldemo.dao.DatabaseBean;
-import com.study.fldemo.presenter.AndroidPresenter;
 import com.study.fldemo.presenter.AndroidPresenterKt;
 import com.study.toastutils.ToastUtils;
 
@@ -48,8 +47,7 @@ public class AndroidFragment extends BaseFragment implements AndroidContract.Vie
     TextView tvLoading;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
-    private AndroidPresenter presenter;
-    private AndroidPresenterKt presenterKotlin;
+    private AndroidPresenterKt presenter;
     private AndroidAdapter androidAdapter;
     private boolean netStateFlag;
     private String isFirstId = "";
@@ -74,8 +72,7 @@ public class AndroidFragment extends BaseFragment implements AndroidContract.Vie
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (presenter == null) {
-            presenter = new AndroidPresenter(context, this);
-            presenterKotlin = new AndroidPresenterKt( this);
+            presenter = new AndroidPresenterKt(this);
         }
         if (isVisibleToUser) {
             queryOriginalData();
@@ -190,7 +187,7 @@ public class AndroidFragment extends BaseFragment implements AndroidContract.Vie
 
     @Override
     public void queryOriginalData() {
-        presenterKotlin.queryOriginalData(size, page);
+        presenter.queryOriginalData(size, page);
     }
 
     @Override
@@ -198,9 +195,8 @@ public class AndroidFragment extends BaseFragment implements AndroidContract.Vie
         tvLoading.setVisibility(View.GONE);
         llBg.setVisibility(View.GONE);
         String id = "";
-        ArrayList<AndroidBean> results = null;
-        if (bean != null) {
-            results = bean.getSecond();
+        ArrayList<AndroidBean> results = bean.getSecond();
+        if (results != null && results.size() > 0) {
             id = results.get(0).get_id();
         }
 

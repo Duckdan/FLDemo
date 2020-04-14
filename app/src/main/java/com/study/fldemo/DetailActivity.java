@@ -5,10 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -26,7 +32,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.study.fldemo.dao.DaoManager;
 import com.study.fldemo.dao.DatabaseBean;
 import com.study.fldemo.share.ShareSDKUtils;
@@ -43,7 +48,7 @@ public class DetailActivity extends AppCompatActivity {
     @BindView(R.id.mAppbar)
     AppBarLayout mAppbar;
     @BindView(R.id.sdv)
-    SimpleDraweeView sdv;
+    ImageView sdv;
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_title)
@@ -100,7 +105,10 @@ public class DetailActivity extends AppCompatActivity {
     private void initData() {
         boolean isCollected = checkIsCollected();
         ivCollect.setImageResource(isCollected ? R.drawable.icon_collect : R.drawable.icon_stroke_collect);
-        sdv.setImageURI(dataBean.getImageUrl());
+        Glide
+                .with(getApplicationContext())
+                .load(dataBean.getImageUrl())
+                .into(sdv);
         WebSettings settings = wv.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setSupportZoom(true);

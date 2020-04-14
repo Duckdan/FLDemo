@@ -26,12 +26,12 @@
             app:statusBarScrim="@android:color/transparent"
             >
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/sdv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:actualImageScaleType="centerCrop"
+                android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
                 />
 

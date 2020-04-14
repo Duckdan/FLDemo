@@ -1,36 +1,51 @@
 package com.study.fldemo.presenter
 
+import android.content.Context
 import android.util.Log
+
 import com.study.fldemo.bean.AllBean
 import com.study.fldemo.bean.AndroidBean
+import com.study.fldemo.bean.AndroidResultBean
 import com.study.fldemo.bean.FuLiBean
-import com.study.fldemo.contract.AndroidContract
-import com.study.fldemo.contract.ExpandContract
+import com.study.fldemo.bean.FuLiResultBean
+import com.study.fldemo.contract.IosContract
 import com.study.fldemo.utils.HttpConnectUtils
+
+import java.util.ArrayList
+import java.util.Random
+
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.annotations.NonNull
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.BiFunction
+import io.reactivex.functions.Function
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 
-class ExpandPresenterKt(private val view: ExpandContract.View) : ExpandContract.Presenter {
-
-
-    private var utils: HttpConnectUtils = HttpConnectUtils.getInstance("")
-    private var random: Random = Random()
+/**
+ * Created by Administrator on 2017/9/29.
+ */
+class IosPresenterKt(private val view: IosContract.View) : IosContract.Presenter {
+    private val utils: HttpConnectUtils = HttpConnectUtils.getInstance("")
+    private val random: Random = Random()
 
     override fun queryOriginalData(size: Int, page: Int) {
-        var randomPage = random.nextInt(2)
+        var randomPage = random.nextInt(5)
         try {
             //在主线程中创建协程
             GlobalScope.launch(Dispatchers.Main) {
                 //不会创建新的协程，在指定协程上运行挂起代码块，并挂起该协程直至代码块运行完成。
                 val androidBean = withContext(Dispatchers.IO) {
-                    utils.managerKotlin.getExpandDataKotlin(size, page)
+                    utils.managerKotlin.getIosDataKotlin(size, page)
                 }
 
                 val fuLiBean = withContext(Dispatchers.IO) {
-                    utils.managerKotlin.getFuLiListDataKotlin(size, page + randomPage)
+                    utils.managerKotlin.getFuLiListDataKotlin(size, page + 1 + randomPage)
                 }
 
                 var allBean = AllBean<AndroidBean>()
@@ -42,5 +57,4 @@ class ExpandPresenterKt(private val view: ExpandContract.View) : ExpandContract.
             view.onGetDataFail("请求失败")
         }
     }
-
 }

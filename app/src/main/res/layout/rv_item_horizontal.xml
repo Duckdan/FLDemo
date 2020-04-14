@@ -16,13 +16,11 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/sdv"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_centerVertical="true"
-            app:placeholderImage="@drawable/header"
-            app:roundAsCircle="true" />
+            android:layout_centerVertical="true" />
 
         <LinearLayout
             android:layout_width="match_parent"

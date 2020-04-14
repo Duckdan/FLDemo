@@ -3,21 +3,22 @@ package com.study.fldemo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import android.view.View;
 import android.widget.TextView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.mob.MobSDK;
 import com.study.fldemo.adapter.BaseAdapter;
 import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.manager.SecondViewI;
-import com.study.fldemo.presenter.GirlPresenter;
+import com.study.fldemo.presenter.GirlPresenterKt;
 import com.study.fldemo.utils.NetStateUtils;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class SecondActivity extends AppCompatActivity implements SecondViewI,
     private SwipeRefreshLayout srl;
     private int size = 20;
     private int page = 1;
-    private GirlPresenter mainPresenter;
+    private GirlPresenterKt mainPresenter;
     private BaseAdapter mBaseAdapter;
     private TextView tvLoading;
     private Context context = this;
@@ -41,8 +42,7 @@ public class SecondActivity extends AppCompatActivity implements SecondViewI,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fresco.initialize(this);
-        MobSDK.init(this,"203acaefb6205","cf155b70894ce61017f26f2ed19af2c3");
+        MobSDK.init(this, "203acaefb6205", "cf155b70894ce61017f26f2ed19af2c3");
         setContentView(R.layout.activity_second);
         rv = (RecyclerView) findViewById(R.id.rv);
         srl = (SwipeRefreshLayout) findViewById(R.id.srl);
@@ -51,7 +51,7 @@ public class SecondActivity extends AppCompatActivity implements SecondViewI,
         srl.setColorSchemeColors(0x88ffff00, 0x88ff00ff);
         srl.setRefreshing(true);
         srl.setOnRefreshListener(this);
-        mainPresenter = new GirlPresenter(this, this);
+        mainPresenter = new GirlPresenterKt(this);
         StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rv.setLayoutManager(manager);
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -121,11 +121,11 @@ public class SecondActivity extends AppCompatActivity implements SecondViewI,
 //        Toast.makeText(this, "加载成功" + results.size(), Toast.LENGTH_SHORT).show();
         String id = "";
         if (results != null) {
-            id = results.get(0)._id;
+            id = results.get(0).get_id();
         }
         if (mBaseAdapter == null) {
             if (results != null) {
-                isFirstId = results.get(0)._id;
+                isFirstId = results.get(0).get_id();
             }
             mBaseAdapter = new BaseAdapter(this, results);
             mBaseAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {

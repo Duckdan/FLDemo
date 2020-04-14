@@ -9,9 +9,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.View;
@@ -21,7 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
 import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.share.ShareSDKUtils;
 import com.study.fldemo.utils.HttpConnectUtils;
@@ -48,7 +50,7 @@ import okhttp3.ResponseBody;
 
 public class BigImageActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private SimpleDraweeView sdv;
+    private ImageView sdv;
     private FuLiBean fuLiBean;
     private TextView ivShare;
     private TextView ivDownload;
@@ -61,7 +63,7 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_big_image);
 
-        sdv = (SimpleDraweeView) findViewById(R.id.sdv);
+        sdv = findViewById(R.id.sdv);
         ImageView ivBack = (ImageView) findViewById(R.id.iv_back);
         ivShare = (TextView) findViewById(R.id.iv_share);
         ivDownload = (TextView) findViewById(R.id.iv_download);
@@ -70,8 +72,8 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
         ivBack.setOnClickListener(this);
         Intent intent = getIntent();
         fuLiBean = intent.getParcelableExtra("big");
-        picurl = fuLiBean.url;
-        sdv.setImageURI(fuLiBean.url);
+        picurl = fuLiBean.getUrl();
+        Glide.with(getApplicationContext()).load(fuLiBean.getUrl()).into(sdv);
         httpConnectUtils = HttpConnectUtils.getInstance("");
     }
 
@@ -96,7 +98,7 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
                 }
                 break;
             case R.id.iv_download:
-                downloadImage(fuLiBean.url);
+                downloadImage(fuLiBean.getUrl());
                 break;
         }
     }
@@ -114,7 +116,7 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
                     setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ShareSDKUtils.shareQQ(fuLiBean.who + "", fuLiBean.desc + "", picurl, picurl, Platform.SHARE_IMAGE);
+                            ShareSDKUtils.shareQQ(fuLiBean.getWho() + "", fuLiBean.getDesc() + "", picurl, picurl, Platform.SHARE_IMAGE);
                             shareDialog.dismiss();
                         }
                     });
@@ -123,7 +125,7 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
                     setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ShareSDKUtils.shareWX(fuLiBean.who + "", fuLiBean.desc + "", picurl, picurl, Platform.SHARE_IMAGE);
+                            ShareSDKUtils.shareWX(fuLiBean.getWho() + "", fuLiBean.getDesc() + "", picurl, picurl, Platform.SHARE_IMAGE);
                             shareDialog.dismiss();
                         }
                     });
@@ -145,7 +147,7 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
                     // 不需要解释为何需要该权限，直接请求授权
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 }
-            }else {
+            } else {
                 download(url);
             }
         } else {
@@ -195,7 +197,7 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
         InputStream inputStream = body.byteStream();
         String filePath = Environment.getExternalStorageDirectory().getPath();
         String format = DateFormat.format("yyyy-dd-MM HH:mm:ss", System.currentTimeMillis()).toString();
-        String fileName = format + " " + fuLiBean.who + fuLiBean.url.substring(fuLiBean.url.lastIndexOf("."), fuLiBean.url.length());
+        String fileName = format + " " + fuLiBean.getWho() + fuLiBean.getUrl().substring(fuLiBean.getUrl().lastIndexOf("."), fuLiBean.getUrl().length());
         File fileDir = new File(filePath, "fuli");
         if (!fileDir.exists()) {
             fileDir.mkdir();
@@ -252,7 +254,7 @@ public class BigImageActivity extends AppCompatActivity implements View.OnClickL
         if (requestCode == 1) {
             if (permissions.length == 1) {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    download(fuLiBean.url);
+                    download(fuLiBean.getUrl());
                 }
             }
         }

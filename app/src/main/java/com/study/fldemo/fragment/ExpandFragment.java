@@ -22,7 +22,6 @@ import com.study.fldemo.bean.AndroidBean;
 import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.contract.ExpandContract;
 import com.study.fldemo.dao.DatabaseBean;
-import com.study.fldemo.presenter.ExpandPresenter;
 import com.study.fldemo.presenter.ExpandPresenterKt;
 import com.study.toastutils.ToastUtils;
 
@@ -193,9 +192,8 @@ public class ExpandFragment extends BaseFragment implements ExpandContract.View,
         tvLoading.setVisibility(View.GONE);
         llBg.setVisibility(View.GONE);
         String id = "";
-        ArrayList<AndroidBean> results = null;
-        if (bean != null) {
-            results = bean.getSecond();
+        ArrayList<AndroidBean> results = bean.getSecond();
+        if (results != null && results.size() > 0) {
             id = results.get(0).get_id();
         }
 

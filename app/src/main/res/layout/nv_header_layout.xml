@@ -9,12 +9,10 @@
     android:orientation="vertical"
     android:padding="40dp">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/sdv"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        app:placeholderImage="@drawable/header"
-        app:roundAsCircle="true"
         />
 
     <TextView

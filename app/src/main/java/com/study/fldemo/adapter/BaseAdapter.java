@@ -5,15 +5,13 @@ import android.net.Uri;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.bumptech.glide.Glide;
 import com.study.fldemo.R;
 import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.utils.doubleclick.AntiShake;
@@ -43,13 +41,7 @@ public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.MineHolder> {
         View inflate = null;
         RecyclerView recyclerView = (RecyclerView) parent;
         StaggeredGridLayoutManager sglm = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
-//        if (viewType == 1) {
-//            inflate = View.inflate(mContext, R.layout.rv_footer, null);
-//
-//        } else {
         inflate = View.inflate(mContext, R.layout.rv_item, null);
-        // sglm.setSpanCount(2);
-//        }
         return new MineHolder(inflate, viewType);
     }
 
@@ -61,14 +53,6 @@ public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.MineHolder> {
         }
     }
 
-//    @Override
-//    public int getItemViewType(int position) {
-//        if (position == mLists.size()) {
-//            return 1;
-//        } else {
-//            return 0;
-//        }
-//    }
 
     @Override
     public int getItemCount() {
@@ -88,7 +72,7 @@ public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.MineHolder> {
     class MineHolder extends RecyclerView.ViewHolder {
 
         private TextView mTvName;
-        private SimpleDraweeView mSdv;
+        private ImageView mSdv;
 
         public MineHolder(View itemView, int viewType) {
             super(itemView);
@@ -100,38 +84,25 @@ public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.MineHolder> {
                             return;
                         }
                         int position = getAdapterPosition();
-//                        Toast.makeText(mContext, "点击了" + position, Toast.LENGTH_SHORT).show();
                         if (listener != null) {
                             listener.onItemClickListener(position, mLists.get(position));
                         }
                     }
                 });
-                mTvName = (TextView) itemView.findViewById(R.id.tv_name);
-                mSdv = (SimpleDraweeView) itemView.findViewById(R.id.sdv);
+                mTvName = itemView.findViewById(R.id.tv_name);
+                mSdv = itemView.findViewById(R.id.sdv);
             }
         }
 
         public void setFuLiBean(FuLiBean fuLiBean, int position) {
-            ViewGroup.LayoutParams layoutParams = mSdv.getLayoutParams();
-//            layoutParams.width = 300;
-            if (position % 2 == 0) {
-                layoutParams.height = 500;
-            } else {
-                layoutParams.height = 600;
-            }
-            Uri uri = Uri.parse(fuLiBean.url);
-            ImageRequest imageRequest = ImageRequestBuilder
-                    .newBuilderWithSource(uri)
-                    .build();
-            DraweeController draweeController = Fresco
-                    .newDraweeControllerBuilder()
-                    .setUri(uri)
-                    .setImageRequest(imageRequest)
-                    .setOldController(mSdv.getController())
-                    .build();
-            mSdv.setController(draweeController);
-//            mSdv.setImageURI(fuLiBean.url);
-            mTvName.setText(fuLiBean.who);
+
+
+            Glide
+                    .with(mContext)
+                    .load(fuLiBean.getUrl())
+                    //   .apply(RequestOptions.bitmapTransform(new RoundedCorners(10)))
+                    .into(mSdv);
+            mTvName.setText(fuLiBean.getWho());
         }
     }
 

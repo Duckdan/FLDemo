@@ -54,14 +54,11 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.facebook.fresco:fresco:1.5.0'
+//    implementation 'com.facebook.fresco:fresco:1.5.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'org.greenrobot:eventbus:3.0.0'
@@ -72,7 +69,16 @@ dependencies {
     implementation 'com.github.Duckdan:ToastLibray:V1.1'
 
     //kotlin以及协程依赖
-    implementation rootProject.ext.kotlinLibs
+    implementation kotlinLibs
+    //Glide依赖
+    implementation base_lib["glide"]
+    annotationProcessor  base_lib["glide_apt"]
+    //retrofit
+    implementation base_lib["retrofit"]
+    implementation base_lib["retrofit_rxjava"]
+    implementation base_lib["retrofit_gson"]
+    implementation base_lib["okhttp3_logging"]
+
     //65536
     implementation 'androidx.multidex:multidex:2.0.0'
 }

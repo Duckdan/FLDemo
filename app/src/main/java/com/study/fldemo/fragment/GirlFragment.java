@@ -2,12 +2,14 @@ package com.study.fldemo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +19,7 @@ import com.study.fldemo.R;
 import com.study.fldemo.adapter.BaseAdapter;
 import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.manager.SecondViewI;
-import com.study.fldemo.presenter.GirlPresenter;
+import com.study.fldemo.presenter.GirlPresenterKt;
 import com.study.toastutils.ToastUtils;
 
 import java.util.ArrayList;
@@ -41,13 +43,13 @@ public class GirlFragment extends BaseFragment implements SecondViewI, SwipeRefr
     TextView tvLoading;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
-    private GirlPresenter mainPresenter;
+    private GirlPresenterKt mainPresenter;
     private BaseAdapter mBaseAdapter;
     private boolean netStateFlag;
     private String isFirstId = "";
     private List<FuLiBean> results = new ArrayList<>();
     private int size = 20;
-    private int page = 1;
+    private int page = 2;
     private StaggeredGridLayoutManager staggeredmanager;
 
 
@@ -65,7 +67,7 @@ public class GirlFragment extends BaseFragment implements SecondViewI, SwipeRefr
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (mainPresenter == null) {
-            mainPresenter = new GirlPresenter(context, this);
+            mainPresenter = new GirlPresenterKt(this);
         }
         if (isVisibleToUser) {
             mainPresenter.getFuLiListData(size, page);
@@ -154,7 +156,7 @@ public class GirlFragment extends BaseFragment implements SecondViewI, SwipeRefr
     @Override
     public void onRefresh() {
         showTvNetWorkState();
-        page = 1;
+        page = 2;
         mainPresenter.getFuLiListData(size, page);
 
     }
@@ -179,8 +181,8 @@ public class GirlFragment extends BaseFragment implements SecondViewI, SwipeRefr
         tvLoading.setVisibility(View.GONE);
         llBg.setVisibility(View.GONE);
         String id = "";
-        if (results != null) {
-            id = results.get(0)._id;
+        if (results != null && results.size() > 0) {
+            id = results.get(0).get_id();
         }
 
         if (!id.equals(isFirstId)) {

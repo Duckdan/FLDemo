@@ -2,12 +2,14 @@ package com.study.fldemo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +22,7 @@ import com.study.fldemo.bean.AndroidBean;
 import com.study.fldemo.bean.FuLiBean;
 import com.study.fldemo.contract.VideoContract;
 import com.study.fldemo.dao.DatabaseBean;
-import com.study.fldemo.presenter.VideoPresenter;
+import com.study.fldemo.presenter.VideoPresenterKt;
 import com.study.toastutils.ToastUtils;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ import butterknife.BindView;
  * Created by Administrator on 2017/9/30.
  */
 
-public class VideoFragment extends BaseFragment implements VideoContract.View,SwipeRefreshLayout.OnRefreshListener{
+public class VideoFragment extends BaseFragment implements VideoContract.View, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.ll_bg)
     LinearLayout llBg;
     @BindView(R.id.tv_net)
@@ -42,7 +44,7 @@ public class VideoFragment extends BaseFragment implements VideoContract.View,Sw
     TextView tvLoading;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
-    private VideoPresenter presenter;
+    private VideoPresenterKt presenter;
     private AndroidAdapter androidAdapter;
     private boolean netStateFlag;
     private String isFirstId = "";
@@ -67,7 +69,7 @@ public class VideoFragment extends BaseFragment implements VideoContract.View,Sw
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (presenter == null) {
-            presenter = new VideoPresenter(context, this);
+            presenter = new VideoPresenterKt(this);
         }
         if (isVisibleToUser) {
             queryOriginalData();
@@ -190,9 +192,8 @@ public class VideoFragment extends BaseFragment implements VideoContract.View,Sw
         tvLoading.setVisibility(View.GONE);
         llBg.setVisibility(View.GONE);
         String id = "";
-        ArrayList<AndroidBean> results = null;
-        if (bean != null) {
-            results = bean.getSecond();
+        ArrayList<AndroidBean> results = bean.getSecond();
+        if (results != null && results.size() > 0) {
             id = results.get(0).get_id();
         }
 

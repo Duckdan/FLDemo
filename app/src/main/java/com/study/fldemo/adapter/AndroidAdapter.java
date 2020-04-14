@@ -1,13 +1,18 @@
 package com.study.fldemo.adapter;
 
 import android.content.Context;
+
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.study.fldemo.R;
 import com.study.fldemo.bean.AndroidBean;
 import com.study.fldemo.bean.FuLiBean;
@@ -60,10 +65,8 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.AndroidH
     public void onBindViewHolder(AndroidHoder holder, int position) {
         final AndroidBean firstBean = first.get(position);
         final FuLiBean secondBean = second.get(position);
-        holder.sdv.setImageURI(secondBean.url);
-        holder.tvTitle.setText(firstBean.getDesc());
-        holder.tvAuthor.setText(firstBean.getWho());
-        holder.tvTime.setText(TimeUtils.utc2Local(firstBean.getPublishedAt()));
+        holder.setData(position);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +83,7 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.AndroidH
                     bean.setType(firstBean.getType());
                     bean.setUrl(firstBean.getUrl());
                     bean.setWho(firstBean.getWho());
-                    bean.setImageUrl(secondBean.url);
+                    bean.setImageUrl(secondBean.getUrl());
                     listener.onItemClick(bean);
                 }
             }
@@ -97,7 +100,7 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.AndroidH
      */
     public class AndroidHoder extends RecyclerView.ViewHolder {
 
-        public SimpleDraweeView sdv;
+        public ImageView sdv;
         public TextView tvTitle;
         public TextView tvAuthor;
         public TextView tvTime;
@@ -108,16 +111,20 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.AndroidH
         }
 
         private void initView() {
-            sdv = (SimpleDraweeView) itemView.findViewById(R.id.sdv);
-            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
-            tvAuthor = (TextView) itemView.findViewById(R.id.tv_author);
-            tvTime = (TextView) itemView.findViewById(R.id.tv_time);
+            sdv = itemView.findViewById(R.id.sdv);
+            tvTitle = itemView.findViewById(R.id.tv_title);
+            tvAuthor = itemView.findViewById(R.id.tv_author);
+            tvTime = itemView.findViewById(R.id.tv_time);
         }
 
         public void setData(int position) {
             final AndroidBean firstBean = first.get(position);
             final FuLiBean secondBean = second.get(position);
-            sdv.setImageURI(secondBean.url);
+            Glide
+                    .with(context)
+                    .load(secondBean.getUrl())
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .into(sdv);
             tvTitle.setText(firstBean.getDesc());
             tvAuthor.setText(firstBean.getWho());
             tvTime.setText(TimeUtils.utc2Local(firstBean.getPublishedAt()));

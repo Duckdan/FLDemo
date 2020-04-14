@@ -43,6 +43,15 @@ public interface HttpUrlManager {
     @GET("data/Android/{size}/{page}")
     Deferred<AndroidResultBean> getAndroidDataKotlin(@Path("size") int size, @Path("page") int page);
 
+    @GET("data/iOS/{size}/{page}")
+    Deferred<AndroidResultBean> getIosDataKotlin(@Path("size") int size, @Path("page") int page);
+
+    @GET("data/前端/{size}/{page}")
+    Deferred<AndroidResultBean> getWebDataKotlin(@Path("size") int size, @Path("page") int page);
+
     @GET("data/拓展资源/{size}/{page}")
     Deferred<AndroidResultBean> getExpandDataKotlin(@Path("size") int size, @Path("page") int page);
+
+    @GET("data/休息视频/{size}/{page}")
+    Deferred<AndroidResultBean> getVideoDataKotlin(@Path("size") int size, @Path("page") int page);
 }

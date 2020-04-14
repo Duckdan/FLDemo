@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="#cc000000"
-    android:orientation="vertical"
-    >
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
     <!-- app:actualImageScaleType="fitCenter"
     -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:fitsSystemWindows="true"
-        app:layout_collapseMode="pin"
-        >
+        app:layout_collapseMode="pin">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -25,8 +22,7 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/back_selector"
             android:padding="10dp"
-            android:src="@drawable/icon_back"
-            />
+            android:src="@drawable/icon_back" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -35,33 +31,29 @@
             android:layout_centerInParent="true"
             android:text="图片详情"
             android:textColor="@color/white"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/sdv"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            app:actualImageScaleType="fitCenter"
-            app:placeholderImage="@mipmap/ic_launcher"
-            app:placeholderImageScaleType="fitXY"
-            app:viewAspectRatio="1"
-            />
+            android:scaleType="fitCenter" />
 
 
     </FrameLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/iv_share"
@@ -70,11 +62,10 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="分享"
             android:gravity="center"
-            android:textSize="20sp"
+            android:text="分享"
             android:textColor="@color/white"
-            />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/iv_download"
@@ -83,10 +74,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:text="下载"
             android:gravity="center"
-            android:textSize="20sp"
+            android:text="下载"
             android:textColor="@color/white"
-            />
+            android:textSize="20sp" />
     </RelativeLayout>
 </LinearLayout>
