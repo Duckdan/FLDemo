@@ -10,13 +10,13 @@
     android:padding="40dp">
 
     <ImageView
-        android:id="@+id/sdv"
+        android:id="@+id/menu_sdv"
         android:layout_width="130dp"
         android:layout_height="130dp"
         />
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_menu_name"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

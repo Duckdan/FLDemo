@@ -60,7 +60,7 @@ public class ShareSDKUtils {
         if (picUrl != null) {
             sp.setImageUrl(picUrl);
         }
-        Platform weibo = PublicStaticData.myShareSDK.getPlatform(SinaWeibo.NAME);
+        Platform weibo = PublicStaticData.INSTANCE.getMyShareSDK().getPlatform(SinaWeibo.NAME);
         weibo.setPlatformActionListener(mPlatformActionListener); // 设置分享事件回调
         // 执行图文分享
         weibo.share(sp);
@@ -88,7 +88,7 @@ public class ShareSDKUtils {
         }
 //        sp.setShareType(Platform.SHARE_IMAGE);
 //        sp.setUrl("http://qq.com");
-        Platform qzone = PublicStaticData.myShareSDK.getPlatform(QZone.NAME);
+        Platform qzone = PublicStaticData.INSTANCE.getMyShareSDK().getPlatform(QZone.NAME);
         qzone.setPlatformActionListener(mPlatformActionListener); // 设置分享事件回调
         // 执行图文分享
         qzone.share(sp);
@@ -117,7 +117,7 @@ public class ShareSDKUtils {
         }
         sp.setShareType(shareType);
         sp.setUrl(titleUrl);
-        Platform qq = PublicStaticData.myShareSDK.getPlatform(QQ.NAME);
+        Platform qq = PublicStaticData.INSTANCE.getMyShareSDK().getPlatform(QQ.NAME);
         qq.setPlatformActionListener(mPlatformActionListener); // 设置分享事件回调
         // 执行图文分享
         qq.share(sp);
@@ -145,7 +145,7 @@ public class ShareSDKUtils {
         }
         sp.setShareType(Platform.SHARE_IMAGE);
         sp.setUrl("http://www.sina.com.cn");
-        Platform qq = PublicStaticData.myShareSDK.getPlatform(WechatMoments.NAME);
+        Platform qq = PublicStaticData.INSTANCE.getMyShareSDK().getPlatform(WechatMoments.NAME);
         qq.setPlatformActionListener(mPlatformActionListener); // 设置分享事件回调
         // 执行图文分享
         qq.share(sp);
@@ -182,7 +182,7 @@ public class ShareSDKUtils {
         }
         sp.setShareType(shareType);
         sp.setUrl(titleUrl);
-        Platform wx = PublicStaticData.myShareSDK.getPlatform(Wechat.NAME);
+        Platform wx = PublicStaticData.INSTANCE.getMyShareSDK().getPlatform(Wechat.NAME);
         wx.setPlatformActionListener(mPlatformActionListener); // 设置分享事件回调
         // 执行图文分享
         wx.share(sp);
@@ -231,8 +231,8 @@ public class ShareSDKUtils {
             Log.e("share:", Thread.currentThread().getName());
             DialogEvent event = new DialogEvent();
             if (type.equals("login")) {
-                DefineApplication.loginState = true;
-                SpUtils spUtils = DefineApplication.spUtils;
+                DefineApplication.Companion.setLoginState(true);
+                SpUtils spUtils = DefineApplication.Companion.getSpUtils();
                 Log.e("share:", "登录成功");
                 PlatformDb db = platform.getDb();
                 Log.e("share:", db.getUserId());//拿到登录后的openid

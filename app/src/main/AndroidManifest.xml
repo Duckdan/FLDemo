@@ -33,8 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SecondActivity">
-        </activity>
+
         <activity android:name=".BigImageActivity"/>
 
         <receiver android:name=".receiver.NetConnectionReceiver"/>
